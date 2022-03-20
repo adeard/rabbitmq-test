@@ -16,3 +16,5 @@
 $router->get('/', function () use ($router) {
     return $router->app->version()." producer";
 });
+
+$router->post('/send-task', 'SendTaskController');

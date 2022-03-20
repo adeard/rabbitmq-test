@@ -1,0 +1,58 @@
+# docker-compose.yaml
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: app_rabbitmq_test
+    tty: true
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://dbuser:root@127.0.0.1:5432/devdb
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+
+  webserver:
+    image: nginx:stable
+    container_name: webserver_rabbitmq_test
+    restart: always
+    ports:
+      - "8079:79"
+      - "8078:78"
+    depends_on:
+      - app
+    volumes:
+      - ./:/var/www/html
+      - ./docker/app.conf:/etc/nginx/conf.d/default.conf
+      # - ./docker/app.conf:/etc/nginx/sites-available/producer.conf
+      # - ./docker/app.conf:/etc/nginx/sites-enabled/producer.conf
+    links:
+      - app
+
+  db:
+    image: postgres:12
+    container_name: db_rabbitmq_test
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: devsecret
+      POSTGRES_USER: devuser
+      POSTGRES_DB: devdb
+    ports:
+      - "54318:5432"
+  
+  redis:  
+    image: redis
+    container_name: redis_rabbitmq_test
+    ports:
+      - "6379"
+
+
+volumes:
+  db_data:
+  db_data_test:

@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\PingJob;
+use App\Jobs\PointRawJob;
 use Illuminate\Console\Command;
 
-class PingJobCommand extends Command
+class PointRawJobCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ping:job';
+    protected $signature = 'pointraw:job';
 
     /**
      * The console command description.
@@ -38,6 +38,12 @@ class PingJobCommand extends Command
      */
     public function handle()
     {
-        dispatch(new PingJob('test param'));
+        dispatch(new PointRawJob('url?u_id=615&pt_rwd_id=1'));
+        dispatch(new PointRawJob('url?u_id=615&pt_rwd_id=2'));
+        dispatch(new PointRawJob('url?u_id=615&pt_rwd_id=3&news_id=28'));
+        dispatch(new PointRawJob('url?u_id=615&pt_rwd_id=4&news_id=28&read_by=39'));
+        dispatch(new PointRawJob('url?u_id=615&pt_rwd_id=5&question_id=27'));
+        dispatch(new PointRawJob('url?u_id=615&pt_rwd_id=6&vehicle_id=32'));
     }
+
 }

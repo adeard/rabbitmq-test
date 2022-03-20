@@ -3,21 +3,19 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
-// use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class PingJob implements ShouldQueue
+class PointRawJob implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $data;
+    protected $url;
 
-    public function __construct($data)
+    public function __construct($url)
     {
-        $this->data = $data;
+        $this->url = $url;
     }
 
     /**
@@ -27,6 +25,5 @@ class PingJob implements ShouldQueue
      */
     public function handle()
     {
-        //
     }
 }
